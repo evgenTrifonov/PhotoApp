@@ -77,7 +77,9 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ehQ-F2-sxX" secondAttribute="bottom" id="YhD-sh-Ozy"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="jhH-Qa-T6h"/>
+                    <navigationItem key="navigationItem" id="jhH-Qa-T6h">
+                        <barButtonItem key="backBarButtonItem" title="Назад" id="tr7-lx-X5o"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -88,11 +90,11 @@
             <objects>
                 <viewController id="Iw1-g9-g4d" customClass="NewViewController" customModule="PhotoApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZwC-VQ-fBk">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="be1-Zg-7Dz">
-                                <rect key="frame" x="0.0" y="281" width="414" height="334"/>
+                                <rect key="frame" x="0.0" y="193" width="414" height="456"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="xGD-4w-244"/>
@@ -105,7 +107,9 @@
                             <constraint firstItem="xGD-4w-244" firstAttribute="trailing" secondItem="be1-Zg-7Dz" secondAttribute="trailing" id="iPe-x2-0Zp"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="4gk-HR-16H"/>
+                    <navigationItem key="navigationItem" id="4gk-HR-16H">
+                        <barButtonItem key="backBarButtonItem" title="Назад" id="Sxf-Bt-udU"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eA9-Jd-jW3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -129,7 +133,7 @@
             </objects>
             <point key="canvasLocation" x="197" y="-149"/>
         </scene>
-        <!--Start View Controller-->
+        <!--Галерея-->
         <scene sceneID="y8I-ag-dUk">
             <objects>
                 <viewController storyboardIdentifier="startViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Nvc-ui-Bo3" customClass="StartViewController" customModule="PhotoApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -191,7 +195,7 @@
                             <constraint firstItem="bKw-PW-tsn" firstAttribute="centerX" secondItem="fsb-nH-qMF" secondAttribute="centerX" id="pnr-0g-cpi"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="8Fq-0t-dRI"/>
+                    <navigationItem key="navigationItem" title="Галерея" id="8Fq-0t-dRI"/>
                     <connections>
                         <outlet property="comeInButton" destination="VhO-f3-H3r" id="zTW-Hk-z6X"/>
                         <outlet property="passwordButton" destination="8rp-5d-tQq" id="3a7-kw-LgE"/>
@@ -202,24 +206,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZxF-9b-RdG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1286.9565217391305" y="-149.33035714285714"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="lzW-iM-Gly">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ycv-v1-3eD" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Oqa-Om-pIK">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="2vN-aC-21s"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8vp-7C-mbz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="196" y="566"/>
         </scene>
     </scenes>
     <resources>

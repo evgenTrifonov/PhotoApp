@@ -9,13 +9,13 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    var images = ["image0.jpg",
-                  "image1.jpg",
-                  "image2.jpg",
-                  "image3.jpg",
-                  "image4.jpg",
-                  "image5.jpg",
-                  "image6.jpg"
+    var images = ["image0",
+                  "image1",
+                  "image2",
+                  "image3",
+                  "image4",
+                  "image5",
+                  "image6"
     ]
     
     var FavoritImage = ["suit.heart",
@@ -28,14 +28,21 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         navigationItem.title = "Мой альбом"
+       
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: .plain, target: self, action: #selector(showNewController))
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addImage))
+       // navigationItem.rightBarButtonItem = UIBarButtonItem(title: "add", style: .plain, target: self, action: #selector(showNewController))
             
         }
     
-    @objc func showNewController() {
-        navigationController?.pushViewController(NewViewController(), animated: true)
-    }
+//    @objc func showNewController() {
+//        navigationController?.pushViewController(NewViewController(), animated: true)
+//    }
+    
+    @objc func addImage() {
+            navigationController?.pushViewController(NewViewController(), animated: true)
+        }
+    
 }
 
 

@@ -12,7 +12,7 @@ class NewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.title = "Detail"
+        navigationItem.title = "Фотография"
         view.backgroundColor = .gray
         
         

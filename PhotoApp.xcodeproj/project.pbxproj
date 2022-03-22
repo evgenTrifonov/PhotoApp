@@ -79,9 +79,9 @@
 		5C85FEDD27E90E3A007A7907 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5C85FEE727EA32E8007A7907 /* StartViewController.swift */,
 				5C15283F27B2E0FE0004EFCA /* ViewController.swift */,
 				5C85FEE427E91E7F007A7907 /* NewViewController.swift */,
-				5C85FEE727EA32E8007A7907 /* StartViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
