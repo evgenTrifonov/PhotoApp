@@ -16,7 +16,10 @@ class ViewController: UIViewController {
                   "image4.jpg",
                   "image5.jpg",
                   "image6.jpg"
-                  
+    ]
+    
+    var FavoritImage = ["suit.heart",
+                        "suit.heart.fill"
     ]
    
     @IBOutlet weak var collectionView: UICollectionView!

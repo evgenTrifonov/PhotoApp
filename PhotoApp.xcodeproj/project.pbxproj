@@ -16,6 +16,7 @@
 		5C85FEDF27E91AD6007A7907 /* PhoroCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C85FEDE27E91AD6007A7907 /* PhoroCollectionViewCell.swift */; };
 		5C85FEE327E91C2D007A7907 /* MyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C85FEE227E91C2D007A7907 /* MyCollectionViewCell.swift */; };
 		5C85FEE527E91E7F007A7907 /* NewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C85FEE427E91E7F007A7907 /* NewViewController.swift */; };
+		5C85FEE827EA32E8007A7907 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C85FEE727EA32E8007A7907 /* StartViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		5C85FEDE27E91AD6007A7907 /* PhoroCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoroCollectionViewCell.swift; sourceTree = "<group>"; };
 		5C85FEE227E91C2D007A7907 /* MyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCollectionViewCell.swift; sourceTree = "<group>"; };
 		5C85FEE427E91E7F007A7907 /* NewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewViewController.swift; sourceTree = "<group>"; };
+		5C85FEE727EA32E8007A7907 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 			children = (
 				5C15283F27B2E0FE0004EFCA /* ViewController.swift */,
 				5C85FEE427E91E7F007A7907 /* NewViewController.swift */,
+				5C85FEE727EA32E8007A7907 /* StartViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -164,6 +167,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C15284027B2E0FE0004EFCA /* ViewController.swift in Sources */,
+				5C85FEE827EA32E8007A7907 /* StartViewController.swift in Sources */,
 				5C85FEE327E91C2D007A7907 /* MyCollectionViewCell.swift in Sources */,
 				5C15283C27B2E0FE0004EFCA /* AppDelegate.swift in Sources */,
 				5C85FEE527E91E7F007A7907 /* NewViewController.swift in Sources */,
