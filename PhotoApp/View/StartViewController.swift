@@ -37,7 +37,7 @@ class StartViewController: UIViewController {
     @IBAction func comeInButtonAction(_ sender: Any) {
         
         let user = "123"
-        let pass = "123456"
+        let pass = "123"
         
         if usernameTextField.text == user && passwordTextField.text == pass {
             
@@ -71,5 +71,6 @@ class StartViewController: UIViewController {
     }
 
 }
+
 
 

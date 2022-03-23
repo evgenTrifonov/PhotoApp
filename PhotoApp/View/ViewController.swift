@@ -6,10 +6,12 @@
 //
 
 import UIKit
+import Foundation
 
 private let reuseIdentifier = "MyCollectionView"
 
-class ViewController: UIViewController {
+
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
 
     var images = ["image0",
                   "image1",
@@ -20,7 +22,7 @@ class ViewController: UIViewController {
                   "image6"
     ]
     
-    var FavoritImage = ["suit.heart",
+    var favoritImage = ["suit.heart",
                         "suit.heart.fill"
     ]
    
@@ -33,21 +35,20 @@ class ViewController: UIViewController {
        
         
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addImage))
-       // navigationItem.rightBarButtonItem = UIBarButtonItem(title: "add", style: .plain, target: self, action: #selector(showNewController))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Добавить", style: .plain, target: self, action: #selector(addImage))
             
         }
 
     
-    @objc func addImage() {
-            navigationController?.pushViewController(NewViewController(), animated: true)
-        }
     
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        
-        performSegue(withIdentifier: "goToOnePhoto", sender: self)
+    
+    @objc func addImage(_ sender: UIButton) {
+        let Controller = UIStoryboard(name: "Main", bundle: nil)
+        let newStoryboard = Controller.instantiateViewController(withIdentifier: "newViewController") as! NewViewController
+        newStoryboard.modalPresentationStyle = .fullScreen
+        present(newStoryboard, animated: true, completion: nil)
     }
-    
-    
+
     
 }
 
@@ -72,11 +73,13 @@ extension ViewController: UICollectionViewDataSource {
             let newViewController = segue.destination as! NewViewController
             let cell = sender as! MyCollectionViewCell
             newViewController.imageViewDetail = cell.imageView.image
-            newViewController.titleImage = cell.titleImage
 
-  
+            return
         }
     }
+    
+ 
+
     
 }
 
@@ -94,6 +97,7 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
         print(indexPath)
         collectionView.isPagingEnabled = true
     }
-    
-    
+ 
 }
+
+
