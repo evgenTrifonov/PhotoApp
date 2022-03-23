@@ -7,6 +7,8 @@
 
 import UIKit
 
+private let reuseIdentifier = "MyCollectionView"
+
 class ViewController: UIViewController {
 
     var images = ["image0",
@@ -34,31 +36,48 @@ class ViewController: UIViewController {
        // navigationItem.rightBarButtonItem = UIBarButtonItem(title: "add", style: .plain, target: self, action: #selector(showNewController))
             
         }
-    
-//    @objc func showNewController() {
-//        navigationController?.pushViewController(NewViewController(), animated: true)
-//    }
+
     
     @objc func addImage() {
             navigationController?.pushViewController(NewViewController(), animated: true)
         }
     
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        
+        performSegue(withIdentifier: "goToOnePhoto", sender: self)
+    }
+    
+    
+    
 }
-
 
 extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        images.count
+        return images.count
     }
     
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! MyCollectionViewCell
-        cell.layer.borderWidth = 0.5
-        cell.layer.borderColor = UIColor.gray.cgColor
-        cell.imageView.image = UIImage(systemName: images[indexPath.row])
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MyCollectionViewCell
+        cell.imageView.image = UIImage(named: images[indexPath.row])
+        let imageName = images[indexPath.row]
+        let titleImage = images[indexPath.row]
+        cell.imageView.image = UIImage(named: titleImage)
+        cell.titleImage = imageName
         return cell
     }
      
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToOnePhoto" {
+            let newViewController = segue.destination as! NewViewController
+            let cell = sender as! MyCollectionViewCell
+            newViewController.imageViewDetail = cell.imageView.image
+            newViewController.titleImage = cell.titleImage
+
+  
+        }
+    }
+    
 }
 
 extension ViewController: UICollectionViewDelegateFlowLayout {

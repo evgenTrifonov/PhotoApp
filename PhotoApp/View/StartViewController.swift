@@ -11,10 +11,9 @@ import Foundation
 class StartViewController: UIViewController {
 
    
-    @IBOutlet weak var usernameButton: UITextField!
-    @IBOutlet weak var passwordButton: UITextField!
+    @IBOutlet weak var usernameTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var warningLabel: UILabel!
-    
     @IBOutlet weak var comeInButton: UIButton!
     
     
@@ -37,10 +36,10 @@ class StartViewController: UIViewController {
 
     @IBAction func comeInButtonAction(_ sender: Any) {
         
-        let user = "Evgen"
+        let user = "123"
         let pass = "123456"
         
-        if usernameButton.text == user && passwordButton.text == pass {
+        if usernameTextField.text == user && passwordTextField.text == pass {
             
             DispatchQueue.main.async {
                 self.comeInButton.addTarget(self, action: #selector(self.nextGalery), for: .touchDown)
@@ -59,8 +58,8 @@ class StartViewController: UIViewController {
             
         }
         
-        usernameButton.resignFirstResponder()
-        passwordButton.resignFirstResponder()
+        usernameTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
         
     }
     

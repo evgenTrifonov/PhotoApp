@@ -27,38 +27,28 @@
                                     <inset key="sectionInset" minX="20" minY="20" maxX="20" maxY="20"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="2eX-5y-0X1" customClass="MyCollectionViewCell" customModule="PhotoApp" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MyCollectionView" id="2eX-5y-0X1" customClass="MyCollectionViewCell" customModule="PhotoApp" customModuleProvider="target">
                                         <rect key="frame" x="20" y="20" width="100" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="f8R-MB-mM0">
                                             <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6Th-MW-a8o">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6Th-MW-a8o">
                                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
-                                                </imageView>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KxZ-ci-idn">
-                                                    <rect key="frame" x="80" y="0.0" width="20" height="20"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="20" id="Pnm-vK-7kL"/>
-                                                        <constraint firstAttribute="width" constant="20" id="gUp-QT-Tkh"/>
-                                                    </constraints>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="6Th-MW-a8o" firstAttribute="leading" secondItem="f8R-MB-mM0" secondAttribute="leading" id="6rn-uG-9Av"/>
                                                 <constraint firstAttribute="bottom" secondItem="6Th-MW-a8o" secondAttribute="bottom" id="8R3-Ca-0TV"/>
-                                                <constraint firstItem="KxZ-ci-idn" firstAttribute="top" secondItem="f8R-MB-mM0" secondAttribute="top" id="CGB-vo-sCU"/>
-                                                <constraint firstAttribute="trailing" secondItem="KxZ-ci-idn" secondAttribute="trailing" id="CQb-CZ-MRH"/>
                                                 <constraint firstAttribute="trailing" secondItem="6Th-MW-a8o" secondAttribute="trailing" id="PTN-Qo-tEZ"/>
                                                 <constraint firstItem="6Th-MW-a8o" firstAttribute="top" secondItem="f8R-MB-mM0" secondAttribute="top" id="poo-0x-lmF"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <color key="backgroundColor" systemColor="systemGray3Color"/>
                                         <connections>
-                                            <outlet property="FavoritImageView" destination="KxZ-ci-idn" id="HDV-90-IHc"/>
                                             <outlet property="imageView" destination="6Th-MW-a8o" id="ur0-m2-1X6"/>
-                                            <segue destination="Iw1-g9-g4d" kind="show" id="ERE-Rj-RSt"/>
+                                            <segue destination="Iw1-g9-g4d" kind="show" identifier="goToOnePhoto" id="Go3-8F-N4w"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -90,30 +80,51 @@
             <objects>
                 <viewController id="Iw1-g9-g4d" customClass="NewViewController" customModule="PhotoApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZwC-VQ-fBk">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="be1-Zg-7Dz">
-                                <rect key="frame" x="0.0" y="193" width="414" height="456"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="be1-Zg-7Dz">
+                                <rect key="frame" x="0.0" y="343" width="414" height="210"/>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Заголовок" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oRW-TS-1eH">
+                                <rect key="frame" x="20" y="573" width="374" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Описание" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xx4-KS-Mzk">
+                                <rect key="frame" x="20" y="614" width="374" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="xGD-4w-244"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="be1-Zg-7Dz" firstAttribute="top" secondItem="xGD-4w-244" secondAttribute="top" constant="193" id="7De-pJ-tMG"/>
-                            <constraint firstItem="be1-Zg-7Dz" firstAttribute="centerX" secondItem="ZwC-VQ-fBk" secondAttribute="centerX" id="835-Xf-Uf7"/>
-                            <constraint firstItem="be1-Zg-7Dz" firstAttribute="leading" secondItem="xGD-4w-244" secondAttribute="leading" id="KKE-XW-dbi"/>
-                            <constraint firstItem="be1-Zg-7Dz" firstAttribute="centerY" secondItem="ZwC-VQ-fBk" secondAttribute="centerY" id="Kie-Rc-AVn"/>
-                            <constraint firstItem="xGD-4w-244" firstAttribute="trailing" secondItem="be1-Zg-7Dz" secondAttribute="trailing" id="iPe-x2-0Zp"/>
+                            <constraint firstItem="be1-Zg-7Dz" firstAttribute="centerY" secondItem="ZwC-VQ-fBk" secondAttribute="centerY" id="8sB-0P-wU2"/>
+                            <constraint firstItem="xx4-KS-Mzk" firstAttribute="top" secondItem="oRW-TS-1eH" secondAttribute="bottom" constant="20" id="PPr-DI-rHe"/>
+                            <constraint firstItem="oRW-TS-1eH" firstAttribute="top" secondItem="be1-Zg-7Dz" secondAttribute="bottom" constant="20" id="RDy-KX-jqs"/>
+                            <constraint firstItem="be1-Zg-7Dz" firstAttribute="centerX" secondItem="ZwC-VQ-fBk" secondAttribute="centerX" id="eZM-VD-4sm"/>
+                            <constraint firstItem="xGD-4w-244" firstAttribute="trailing" secondItem="xx4-KS-Mzk" secondAttribute="trailing" constant="20" id="ert-vf-xyv"/>
+                            <constraint firstItem="xGD-4w-244" firstAttribute="trailing" secondItem="oRW-TS-1eH" secondAttribute="trailing" constant="20" id="fs8-vI-tti"/>
+                            <constraint firstItem="xx4-KS-Mzk" firstAttribute="leading" secondItem="xGD-4w-244" secondAttribute="leading" constant="20" id="gU8-ka-ej2"/>
+                            <constraint firstItem="be1-Zg-7Dz" firstAttribute="leading" secondItem="xGD-4w-244" secondAttribute="leading" id="nYK-M9-ZLf"/>
+                            <constraint firstItem="be1-Zg-7Dz" firstAttribute="top" secondItem="xGD-4w-244" secondAttribute="top" constant="255" id="oSn-Fe-0po"/>
+                            <constraint firstItem="oRW-TS-1eH" firstAttribute="leading" secondItem="xGD-4w-244" secondAttribute="leading" constant="20" id="qpD-sQ-8QC"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="4gk-HR-16H">
                         <barButtonItem key="backBarButtonItem" title="Назад" id="Sxf-Bt-udU"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="descriptionTextField" destination="xx4-KS-Mzk" id="xHK-bx-Rz8"/>
+                        <outlet property="imageView" destination="be1-Zg-7Dz" id="Rq8-rd-aQ3"/>
+                        <outlet property="titleLabel" destination="oRW-TS-1eH" id="y2x-VT-ykS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eA9-Jd-jW3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2303" y="566"/>
+            <point key="canvasLocation" x="2302.898550724638" y="565.17857142857144"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="bNP-Gh-OdB">
@@ -198,9 +209,10 @@
                     <navigationItem key="navigationItem" title="Галерея" id="8Fq-0t-dRI"/>
                     <connections>
                         <outlet property="comeInButton" destination="VhO-f3-H3r" id="zTW-Hk-z6X"/>
-                        <outlet property="passwordButton" destination="8rp-5d-tQq" id="3a7-kw-LgE"/>
-                        <outlet property="usernameButton" destination="bKw-PW-tsn" id="g4k-X5-D1Q"/>
+                        <outlet property="passwordTextField" destination="8rp-5d-tQq" id="rVT-QK-Yfo"/>
+                        <outlet property="usernameTextField" destination="bKw-PW-tsn" id="Ycb-Hq-avo"/>
                         <outlet property="warningLabel" destination="Zvx-Da-Ywr" id="qhA-By-Pn4"/>
+                        <segue destination="BYZ-38-t0r" kind="show" id="khn-GA-9gZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZxF-9b-RdG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
