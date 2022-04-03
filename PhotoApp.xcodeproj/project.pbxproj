@@ -16,6 +16,11 @@
 		5C85FEE327E91C2D007A7907 /* MyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C85FEE227E91C2D007A7907 /* MyCollectionViewCell.swift */; };
 		5C85FEE527E91E7F007A7907 /* NewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C85FEE427E91E7F007A7907 /* NewViewController.swift */; };
 		5C85FEE827EA32E8007A7907 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C85FEE727EA32E8007A7907 /* StartViewController.swift */; };
+		5C85FEEA27EBBFEB007A7907 /* saveFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C85FEE927EBBFEB007A7907 /* saveFileManager.swift */; };
+		5C85FF4927F86FDA007A7907 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C85FF4827F86FDA007A7907 /* RegisterViewController.swift */; };
+		5C85FF4B27F87A8F007A7907 /* ScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C85FF4A27F87A8F007A7907 /* ScrollViewController.swift */; };
+		5C85FF4F27F87C13007A7907 /* NewPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C85FF4E27F87C13007A7907 /* NewPhoto.swift */; };
+		5C85FF5227F87C84007A7907 /* UIView + Constrains.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C85FF5127F87C84007A7907 /* UIView + Constrains.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +35,11 @@
 		5C85FEE227E91C2D007A7907 /* MyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCollectionViewCell.swift; sourceTree = "<group>"; };
 		5C85FEE427E91E7F007A7907 /* NewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewViewController.swift; sourceTree = "<group>"; };
 		5C85FEE727EA32E8007A7907 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
+		5C85FEE927EBBFEB007A7907 /* saveFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = saveFileManager.swift; sourceTree = "<group>"; };
+		5C85FF4827F86FDA007A7907 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		5C85FF4A27F87A8F007A7907 /* ScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewController.swift; sourceTree = "<group>"; };
+		5C85FF4E27F87C13007A7907 /* NewPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPhoto.swift; sourceTree = "<group>"; };
+		5C85FF5127F87C84007A7907 /* UIView + Constrains.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Constrains.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,8 +72,9 @@
 		5C15283A27B2E0FE0004EFCA /* PhotoApp */ = {
 			isa = PBXGroup;
 			children = (
-				5C15283B27B2E0FE0004EFCA /* AppDelegate.swift */,
-				5C15283D27B2E0FE0004EFCA /* SceneDelegate.swift */,
+				5C85FF4C27F87BCB007A7907 /* Application */,
+				5C85FF5027F87C50007A7907 /* Extension */,
+				5C85FF4D27F87BDB007A7907 /* Model */,
 				5C85FEDD27E90E3A007A7907 /* View */,
 				5C85FEE627E91E86007A7907 /* CollectionCell */,
 				5C15284127B2E0FE0004EFCA /* Main.storyboard */,
@@ -78,7 +89,9 @@
 			isa = PBXGroup;
 			children = (
 				5C85FEE727EA32E8007A7907 /* StartViewController.swift */,
+				5C85FF4827F86FDA007A7907 /* RegisterViewController.swift */,
 				5C15283F27B2E0FE0004EFCA /* ViewController.swift */,
+				5C85FF4A27F87A8F007A7907 /* ScrollViewController.swift */,
 				5C85FEE427E91E7F007A7907 /* NewViewController.swift */,
 			);
 			path = View;
@@ -90,6 +103,32 @@
 				5C85FEE227E91C2D007A7907 /* MyCollectionViewCell.swift */,
 			);
 			path = CollectionCell;
+			sourceTree = "<group>";
+		};
+		5C85FF4C27F87BCB007A7907 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				5C15283B27B2E0FE0004EFCA /* AppDelegate.swift */,
+				5C15283D27B2E0FE0004EFCA /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		5C85FF4D27F87BDB007A7907 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5C85FEE927EBBFEB007A7907 /* saveFileManager.swift */,
+				5C85FF4E27F87C13007A7907 /* NewPhoto.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5C85FF5027F87C50007A7907 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				5C85FF5127F87C84007A7907 /* UIView + Constrains.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -166,9 +205,14 @@
 				5C15284027B2E0FE0004EFCA /* ViewController.swift in Sources */,
 				5C85FEE827EA32E8007A7907 /* StartViewController.swift in Sources */,
 				5C85FEE327E91C2D007A7907 /* MyCollectionViewCell.swift in Sources */,
+				5C85FF4927F86FDA007A7907 /* RegisterViewController.swift in Sources */,
+				5C85FF4B27F87A8F007A7907 /* ScrollViewController.swift in Sources */,
+				5C85FEEA27EBBFEB007A7907 /* saveFileManager.swift in Sources */,
+				5C85FF5227F87C84007A7907 /* UIView + Constrains.swift in Sources */,
 				5C15283C27B2E0FE0004EFCA /* AppDelegate.swift in Sources */,
 				5C85FEE527E91E7F007A7907 /* NewViewController.swift in Sources */,
 				5C15283E27B2E0FE0004EFCA /* SceneDelegate.swift in Sources */,
+				5C85FF4F27F87C13007A7907 /* NewPhoto.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

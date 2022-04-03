@@ -166,7 +166,7 @@
             </objects>
             <point key="canvasLocation" x="197" y="-149"/>
         </scene>
-        <!--Галерея-->
+        <!--Авторизация-->
         <scene sceneID="y8I-ag-dUk">
             <objects>
                 <viewController storyboardIdentifier="startViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Nvc-ui-Bo3" customClass="StartViewController" customModule="PhotoApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -184,7 +184,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Авторизация" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dyX-XH-6wT">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Вход" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dyX-XH-6wT">
                                 <rect key="frame" x="80" y="374.5" width="254" height="26.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <nil key="textColor"/>
@@ -202,17 +202,29 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zvx-Da-Ywr">
-                                <rect key="frame" x="20" y="620" width="374" height="0.0"/>
+                                <rect key="frame" x="20" y="640" width="374" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uPJ-u1-26L">
+                                <rect key="frame" x="90" y="600" width="234" height="31"/>
+                                <color key="backgroundColor" red="1" green="0.83755965570000002" blue="0.42843785969999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Регистрация"/>
+                                <connections>
+                                    <action selector="comeInButtonAction:" destination="Nvc-ui-Bo3" eventType="touchUpInside" id="tix-Ta-e1B"/>
+                                    <segue destination="vOH-vT-kVV" kind="show" id="YdQ-Q8-diw"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="SB4-3B-9Pe"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="8rp-5d-tQq" firstAttribute="leading" secondItem="SB4-3B-9Pe" secondAttribute="leading" constant="80" id="1rr-Y4-TyN"/>
-                            <constraint firstItem="Zvx-Da-Ywr" firstAttribute="top" secondItem="VhO-f3-H3r" secondAttribute="bottom" constant="40" id="7or-2Y-EhP"/>
+                            <constraint firstItem="uPJ-u1-26L" firstAttribute="top" secondItem="VhO-f3-H3r" secondAttribute="bottom" constant="20" id="2As-2H-0Z7"/>
+                            <constraint firstItem="Zvx-Da-Ywr" firstAttribute="top" secondItem="VhO-f3-H3r" secondAttribute="bottom" constant="60" id="7or-2Y-EhP"/>
                             <constraint firstItem="SB4-3B-9Pe" firstAttribute="trailing" secondItem="VhO-f3-H3r" secondAttribute="trailing" constant="90" id="Et0-KI-zuN"/>
                             <constraint firstItem="SB4-3B-9Pe" firstAttribute="trailing" secondItem="bKw-PW-tsn" secondAttribute="trailing" constant="80" id="GpM-Ad-GvV"/>
                             <constraint firstItem="VhO-f3-H3r" firstAttribute="top" secondItem="8rp-5d-tQq" secondAttribute="bottom" constant="30" id="INx-HE-PoU"/>
@@ -220,6 +232,7 @@
                             <constraint firstItem="bKw-PW-tsn" firstAttribute="leading" secondItem="SB4-3B-9Pe" secondAttribute="leading" constant="80" id="OVF-9L-MXw"/>
                             <constraint firstItem="SB4-3B-9Pe" firstAttribute="trailing" secondItem="Zvx-Da-Ywr" secondAttribute="trailing" constant="20" id="R7R-qU-bva"/>
                             <constraint firstItem="SB4-3B-9Pe" firstAttribute="trailing" secondItem="dyX-XH-6wT" secondAttribute="trailing" constant="80" id="fXq-XO-8Uq"/>
+                            <constraint firstItem="uPJ-u1-26L" firstAttribute="leading" secondItem="VhO-f3-H3r" secondAttribute="leading" id="iBg-e7-tFZ"/>
                             <constraint firstItem="Zvx-Da-Ywr" firstAttribute="leading" secondItem="SB4-3B-9Pe" secondAttribute="leading" constant="20" id="imR-ec-Gfr"/>
                             <constraint firstItem="bKw-PW-tsn" firstAttribute="top" secondItem="dyX-XH-6wT" secondAttribute="bottom" constant="30" id="kyo-Ui-jb7"/>
                             <constraint firstItem="SB4-3B-9Pe" firstAttribute="trailing" secondItem="8rp-5d-tQq" secondAttribute="trailing" constant="80" id="liw-MN-MRb"/>
@@ -227,9 +240,10 @@
                             <constraint firstItem="8rp-5d-tQq" firstAttribute="top" secondItem="bKw-PW-tsn" secondAttribute="bottom" constant="20" id="p8M-nr-FgG"/>
                             <constraint firstItem="bKw-PW-tsn" firstAttribute="centerY" secondItem="fsb-nH-qMF" secondAttribute="centerY" id="p8q-Uf-au6"/>
                             <constraint firstItem="bKw-PW-tsn" firstAttribute="centerX" secondItem="fsb-nH-qMF" secondAttribute="centerX" id="pnr-0g-cpi"/>
+                            <constraint firstItem="uPJ-u1-26L" firstAttribute="trailing" secondItem="VhO-f3-H3r" secondAttribute="trailing" id="yWh-X9-U5B"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Галерея" id="8Fq-0t-dRI"/>
+                    <navigationItem key="navigationItem" title="Авторизация" id="8Fq-0t-dRI"/>
                     <connections>
                         <outlet property="comeInButton" destination="VhO-f3-H3r" id="zTW-Hk-z6X"/>
                         <outlet property="passwordTextField" destination="8rp-5d-tQq" id="rVT-QK-Yfo"/>
@@ -240,6 +254,69 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZxF-9b-RdG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1286.9565217391305" y="-149.33035714285714"/>
+        </scene>
+        <!--Register View Controller-->
+        <scene sceneID="LYs-jG-Gsy">
+            <objects>
+                <viewController storyboardIdentifier="RegisterViewController" id="vOH-vT-kVV" customClass="RegisterViewController" customModule="PhotoApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="XNL-6C-eng">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Задайте логин" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="05B-LG-6LD">
+                                <rect key="frame" x="80" y="431" width="254" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Задайте пароль" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H9e-iQ-gq3">
+                                <rect key="frame" x="80" y="485" width="254" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rwl-br-vAT">
+                                <rect key="frame" x="80" y="549" width="254" height="31"/>
+                                <color key="backgroundColor" red="1" green="0.83755965570000002" blue="0.42843785969999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Сохранить"/>
+                                <connections>
+                                    <action selector="saveRegistrationButtonAction:" destination="vOH-vT-kVV" eventType="touchUpInside" id="iPG-2N-hjK"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Регистрация" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VCH-BM-1vG">
+                                <rect key="frame" x="80" y="374" width="254" height="27"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="5KG-pP-u4N"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="05B-LG-6LD" firstAttribute="centerY" secondItem="XNL-6C-eng" secondAttribute="centerY" id="6fR-dm-Zzw"/>
+                            <constraint firstItem="Rwl-br-vAT" firstAttribute="top" secondItem="H9e-iQ-gq3" secondAttribute="bottom" constant="30" id="Boz-yK-O9P"/>
+                            <constraint firstItem="VCH-BM-1vG" firstAttribute="leading" secondItem="5KG-pP-u4N" secondAttribute="leading" constant="80" id="Cbh-bA-wi5"/>
+                            <constraint firstItem="05B-LG-6LD" firstAttribute="top" secondItem="VCH-BM-1vG" secondAttribute="bottom" constant="30" id="Hql-QH-Ow8"/>
+                            <constraint firstItem="5KG-pP-u4N" firstAttribute="trailing" secondItem="VCH-BM-1vG" secondAttribute="trailing" constant="80" id="QTZ-ps-Zae"/>
+                            <constraint firstItem="H9e-iQ-gq3" firstAttribute="top" secondItem="05B-LG-6LD" secondAttribute="bottom" constant="20" id="SXJ-qh-Fk6"/>
+                            <constraint firstItem="5KG-pP-u4N" firstAttribute="trailing" secondItem="Rwl-br-vAT" secondAttribute="trailing" constant="80" id="XcV-Ow-oPs"/>
+                            <constraint firstItem="H9e-iQ-gq3" firstAttribute="leading" secondItem="5KG-pP-u4N" secondAttribute="leading" constant="80" id="egE-mw-jeb"/>
+                            <constraint firstItem="05B-LG-6LD" firstAttribute="leading" secondItem="5KG-pP-u4N" secondAttribute="leading" constant="80" id="f41-eV-V4k"/>
+                            <constraint firstItem="Rwl-br-vAT" firstAttribute="leading" secondItem="5KG-pP-u4N" secondAttribute="leading" constant="80" id="gmC-MG-21d"/>
+                            <constraint firstItem="5KG-pP-u4N" firstAttribute="trailing" secondItem="05B-LG-6LD" secondAttribute="trailing" constant="80" id="jM3-rl-vpi"/>
+                            <constraint firstItem="5KG-pP-u4N" firstAttribute="trailing" secondItem="H9e-iQ-gq3" secondAttribute="trailing" constant="80" id="qpW-4I-48b"/>
+                            <constraint firstItem="05B-LG-6LD" firstAttribute="centerX" secondItem="XNL-6C-eng" secondAttribute="centerX" id="ubf-Pv-Toc"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="K1p-nT-MKg"/>
+                    <connections>
+                        <outlet property="passwordTextField" destination="H9e-iQ-gq3" id="Xyg-Cj-U2P"/>
+                        <outlet property="usernameTextField" destination="05B-LG-6LD" id="weQ-uG-oXO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fuv-VA-7Ns" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2280" y="-149"/>
         </scene>
     </scenes>
     <resources>

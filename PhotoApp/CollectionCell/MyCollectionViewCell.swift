@@ -14,4 +14,6 @@ class MyCollectionViewCell: UICollectionViewCell {
     
     
     var titleImage = ""
+    
+    
 }

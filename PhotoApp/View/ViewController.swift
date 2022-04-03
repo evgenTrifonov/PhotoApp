@@ -11,22 +11,35 @@ import Foundation
 private let reuseIdentifier = "MyCollectionView"
 
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
 
-    var images = ["image0",
-                  "image1",
-                  "image2",
-                  "image3",
-                  "image4",
-                  "image5",
-                  "image6"
-    ]
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
     
-    var favoritImage = ["suit.heart",
-                        "suit.heart.fill"
-    ]
-   
-    @IBOutlet weak var collectionView: UICollectionView!
+    let manager = SaveFileManager.instance
+    var identifiersArray: [String] = UserDefaults.standard.stringArray(forKey: "keyList") ?? [String]()
+    
+    var newPhotoArray: [NewPhoto] = []
+
+    let addButton = UIButton()
+    
+//    var imagesArray = ["image0",
+//                  "image1",
+//                  "image2",
+//                  "image3",
+//                  "image4",
+//                  "image5",
+//                  "image6"
+//    ]
+    
+    private let galleryPhotoCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .white
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "myCell")
+        return collectionView
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +48,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
        
         
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addImage))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Добавить", style: .plain, target: self, action: #selector(addImage))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Добавить", style: .plain, target: self, action: #selector(addImage))
+        navigationItem.rightBarButtonItem = addButton
+   
             
         }
 
@@ -54,17 +69,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 
 extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return images.count
+        return newPhotoArray.count
     }
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MyCollectionViewCell
-        cell.imageView.image = UIImage(named: images[indexPath.row])
-        let imageName = images[indexPath.row]
-        let titleImage = images[indexPath.row]
-        cell.imageView.image = UIImage(named: titleImage)
-        cell.titleImage = imageName
+        let imageData = newPhotoArray[indexPath.row].imageData
+        let uiImage = UIImage(data: imageData)
+        cell.backgroundView = UIImageView(image: uiImage)
         return cell
     }
      
@@ -77,6 +91,8 @@ extension ViewController: UICollectionViewDataSource {
             return
         }
     }
+    
+  
     
  
 
