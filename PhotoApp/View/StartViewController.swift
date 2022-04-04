@@ -10,11 +10,21 @@ import Foundation
 
 class StartViewController: UIViewController {
 
-   
+   let button = UIButton()
+    
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var warningLabel: UILabel!
-    @IBOutlet weak var comeInButton: UIButton!
+    
+
+    @IBAction func comeInGalleryButtonAction(_ sender: Any) {
+        button.addTarget(self, action: #selector(nextGalery), for: .touchUpInside)
+    }
+    
+    @IBAction func registrationButtonAction(_ sender: Any) {
+        button.addTarget(self, action: #selector(nextRegister), for: .touchUpInside)
+    }
+    
     
     
     
@@ -23,15 +33,19 @@ class StartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        //create Road
+        //create fon
         fonImageStartView.contentMode = .scaleAspectFill
         fonImageStartView.frame = CGRect(x: CGFloat.zero, y: CGFloat.zero, width: view.frame.width, height: view.frame.height)
         view.addSubview(fonImageStartView)
         view.sendSubviewToBack(fonImageStartView)
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(tap))
+        view.addGestureRecognizer(recognizer)
+        
         
        
         
     }
+   
     func login(userName: String, password: String, completion: () -> Void) {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
@@ -63,42 +77,13 @@ class StartViewController: UIViewController {
     @objc func tap() {
         view.endEditing(true)
     }
-
     
     func showAlertError() {
-        let alert = UIAlertController(title: "Ошибка", message: "Неверный логин или пароль!", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Ошибка", message: "Логин/Пароль не верный", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Назад", style: .destructive, handler: nil))
         present(alert, animated: true)
     }
-
-//    @IBAction func comeInButtonAction(_ sender: Any) {
-//
-//        let user = "123"
-//        let pass = "123"
-//
-//        if usernameTextField.text == user && passwordTextField.text == pass {
-//
-//            DispatchQueue.main.async {
-//                self.comeInButton.addTarget(self, action: #selector(self.nextGalery), for: .touchDown)
-//            }
-//
-//            warningLabel.text = "Данные введены верно!"
-//            warningLabel.textColor = UIColor.green
-//            warningLabel.shadowColor = UIColor.black
-//            warningLabel.layer.opacity = 1
-//
-//        } else {
-//            warningLabel.text = "Неверный логин или пароль!"
-//            warningLabel.textColor = UIColor.red
-//            warningLabel.shadowColor = UIColor.black
-//            warningLabel.layer.opacity = 1
-//
-//        }
-//
-//        usernameTextField.resignFirstResponder()
-//        passwordTextField.resignFirstResponder()
-//
-//    }
+    
     
     @objc func nextGalery(_ sender: UIButton) {
         let Controller = UIStoryboard(name: "Main", bundle: nil)
@@ -108,7 +93,7 @@ class StartViewController: UIViewController {
     }
     
     
-    @objc func goToRegister() {
+    @objc func nextRegister() {
         let registerViewController = RegisterViewController()
         navigationItem.backButtonTitle = ""
         navigationController?.pushViewController(registerViewController, animated: true)

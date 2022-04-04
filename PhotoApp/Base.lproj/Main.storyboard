@@ -115,10 +115,22 @@
                                     <action selector="openGalleryButtonAction:" destination="Iw1-g9-g4d" eventType="touchUpInside" id="uWT-WS-YEa"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ip4-lB-cvl">
+                                <rect key="frame" x="140" y="769" width="134" height="31"/>
+                                <color key="backgroundColor" systemColor="systemRedColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Назад">
+                                    <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="exitToGalleryButton:" destination="Iw1-g9-g4d" eventType="touchUpInside" id="Ir0-iM-90e"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="xGD-4w-244"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="xGD-4w-244" firstAttribute="trailing" secondItem="Ip4-lB-cvl" secondAttribute="trailing" constant="140" id="6qM-BJ-oSn"/>
                             <constraint firstItem="xx4-KS-Mzk" firstAttribute="top" secondItem="be1-Zg-7Dz" secondAttribute="bottom" constant="40" id="7ga-kg-cmf"/>
                             <constraint firstItem="be1-Zg-7Dz" firstAttribute="centerY" secondItem="ZwC-VQ-fBk" secondAttribute="centerY" id="8sB-0P-wU2"/>
                             <constraint firstItem="sph-At-C9g" firstAttribute="leading" secondItem="xGD-4w-244" secondAttribute="leading" constant="120" id="Bqo-fl-mHR"/>
@@ -126,11 +138,13 @@
                             <constraint firstItem="xGD-4w-244" firstAttribute="trailing" secondItem="sph-At-C9g" secondAttribute="trailing" constant="120" id="My4-l3-IVS"/>
                             <constraint firstItem="M4b-MZ-wvz" firstAttribute="top" secondItem="xx4-KS-Mzk" secondAttribute="bottom" constant="20" id="Q8e-vO-CTN"/>
                             <constraint firstItem="xx4-KS-Mzk" firstAttribute="leading" secondItem="xGD-4w-244" secondAttribute="leading" constant="20" id="bF1-S5-cdJ"/>
+                            <constraint firstItem="Ip4-lB-cvl" firstAttribute="leading" secondItem="xGD-4w-244" secondAttribute="leading" constant="140" id="boh-8Z-bh9"/>
                             <constraint firstItem="xGD-4w-244" firstAttribute="trailing" secondItem="M4b-MZ-wvz" secondAttribute="trailing" constant="120" id="deV-mu-fac"/>
                             <constraint firstItem="be1-Zg-7Dz" firstAttribute="centerX" secondItem="ZwC-VQ-fBk" secondAttribute="centerX" id="eZM-VD-4sm"/>
                             <constraint firstItem="M4b-MZ-wvz" firstAttribute="leading" secondItem="xGD-4w-244" secondAttribute="leading" constant="120" id="kp4-lf-xGh"/>
                             <constraint firstItem="be1-Zg-7Dz" firstAttribute="leading" secondItem="xGD-4w-244" secondAttribute="leading" id="nYK-M9-ZLf"/>
                             <constraint firstItem="be1-Zg-7Dz" firstAttribute="top" secondItem="xGD-4w-244" secondAttribute="top" constant="255" id="oSn-Fe-0po"/>
+                            <constraint firstItem="Ip4-lB-cvl" firstAttribute="top" secondItem="sph-At-C9g" secondAttribute="bottom" constant="30" id="pIs-7o-vtP"/>
                             <constraint firstItem="xGD-4w-244" firstAttribute="trailing" secondItem="xx4-KS-Mzk" secondAttribute="trailing" constant="20.5" id="rh0-US-rRJ"/>
                         </constraints>
                     </view>
@@ -197,7 +211,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Войти"/>
                                 <connections>
-                                    <action selector="comeInButtonAction:" destination="Nvc-ui-Bo3" eventType="touchUpInside" id="b7Y-SD-kHP"/>
+                                    <action selector="comeInGalleryButtonAction:" destination="Nvc-ui-Bo3" eventType="touchUpInside" id="pI9-9c-HvT"/>
                                     <segue destination="BYZ-38-t0r" kind="show" identifier="goToCollection" id="ymg-0J-fD6"/>
                                 </connections>
                             </button>
@@ -214,7 +228,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Регистрация"/>
                                 <connections>
-                                    <action selector="comeInButtonAction:" destination="Nvc-ui-Bo3" eventType="touchUpInside" id="tix-Ta-e1B"/>
+                                    <action selector="registrationButtonAction:" destination="Nvc-ui-Bo3" eventType="touchUpInside" id="yee-WN-cAJ"/>
                                     <segue destination="vOH-vT-kVV" kind="show" id="YdQ-Q8-diw"/>
                                 </connections>
                             </button>
@@ -245,7 +259,6 @@
                     </view>
                     <navigationItem key="navigationItem" title="Авторизация" id="8Fq-0t-dRI"/>
                     <connections>
-                        <outlet property="comeInButton" destination="VhO-f3-H3r" id="zTW-Hk-z6X"/>
                         <outlet property="passwordTextField" destination="8rp-5d-tQq" id="rVT-QK-Yfo"/>
                         <outlet property="usernameTextField" destination="bKw-PW-tsn" id="Ycb-Hq-avo"/>
                         <outlet property="warningLabel" destination="Zvx-Da-Ywr" id="qhA-By-Pn4"/>
@@ -311,6 +324,7 @@
                     <navigationItem key="navigationItem" id="K1p-nT-MKg"/>
                     <connections>
                         <outlet property="passwordTextField" destination="H9e-iQ-gq3" id="Xyg-Cj-U2P"/>
+                        <outlet property="saveRegistrationButtonAction" destination="Rwl-br-vAT" id="1zc-gH-anx"/>
                         <outlet property="usernameTextField" destination="05B-LG-6LD" id="weQ-uG-oXO"/>
                     </connections>
                 </viewController>
@@ -325,6 +339,9 @@
         </systemColor>
         <systemColor name="systemGray3Color">
             <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

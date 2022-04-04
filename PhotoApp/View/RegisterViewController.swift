@@ -9,13 +9,15 @@ import UIKit
 
 class RegisterViewController: UIViewController {
 
-    
+    let button = UIButton()
     
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
-   
+    @IBOutlet weak var saveRegistrationButtonAction: UIButton!
     @IBAction func saveRegistrationButtonAction(_ sender: Any) {
+        let saveRegistrationButtonAction = UIButton()
+        saveRegistrationButtonAction.addTarget(self, action: #selector(regesterDone), for: .touchUpInside)
     }
     
     
@@ -23,7 +25,6 @@ class RegisterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupView()
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(tap))
         view.addGestureRecognizer(recognizer)
         
@@ -53,26 +54,13 @@ class RegisterViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Ок", style: .default, handler: nil))
         present(alert, animated: true)
     }
-   
 }
-
-private extension RegisterViewController {
-    
-    func setupView() {
-        
-        title = "Регистрация"
-        view.backgroundColor = .white
-        
-        
-        
-    }
     
   
-    
+private extension RegisterViewController {
     @objc func regesterDone() {
-//        register(userName: usernameTextField.text ?? "", password: passwordTextField.text ?? "")
-//        saveRegistrationButtonAction.isEnabled = false
-//        saveRegistrationButtonAction.backgroundColor = .darkGray
-//        showAlertSuccess()
+        register(userName: usernameTextField.text ?? "", password: passwordTextField.text ?? "")
+        saveRegistrationButtonAction.isEnabled = false
+        showAlertSuccess()
     }
 }

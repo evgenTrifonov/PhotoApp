@@ -45,16 +45,35 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         super.viewDidLoad()
         
         navigationItem.title = "Мой альбом"
-       
-        
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addImage))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Добавить", style: .plain, target: self, action: #selector(addImage))
         navigationItem.rightBarButtonItem = addButton
+       
    
             
         }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        identifiersArray = UserDefaults.standard.stringArray(forKey: "keyList") ?? [String]()
+        fillingArrayPhoto()
+        print(identifiersArray.count)
+        print(newPhotoArray.count)
+        galleryPhotoCollectionView.reloadData()
+    }
     
+    @objc func pressPlusButton() {
+       
+        
+    }
+    
+    func fillingArrayPhoto() {
+        newPhotoArray = []
+        for identifier in identifiersArray {
+            guard let newPhoto = manager.load(name: "\(identifier)") else { return }
+            newPhotoArray.append(newPhoto)
+        }
+    }
     
     
     @objc func addImage(_ sender: UIButton) {
@@ -90,13 +109,7 @@ extension ViewController: UICollectionViewDataSource {
 
             return
         }
-    }
-    
-  
-    
- 
-
-    
+    }    
 }
 
 extension ViewController: UICollectionViewDelegateFlowLayout {
