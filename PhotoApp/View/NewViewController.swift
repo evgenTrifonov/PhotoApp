@@ -22,18 +22,15 @@ class NewViewController: UIViewController {
     var descriptionImage: String?
     
     
-    @IBAction func addButtonAction(_ sender: Any) {
-        
-    }
+    @IBOutlet weak var addButton: UIButton!
     
     
     @IBAction func openGalleryButtonAction(_ sender: Any) {
         
     }
     
-    @IBAction func exitToGalleryButton(_ sender: Any) {
-        button.addTarget(self, action: #selector(exitGallery), for: .touchUpInside)
-    }
+    
+    @IBOutlet weak var exitToGalleryButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,9 +40,6 @@ class NewViewController: UIViewController {
         imageView.image = imageViewDetail
         descriptionTextField.text = descriptionImage
         
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(goBack))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: self, action: #selector(goBack))
-        navigationItem.rightBarButtonItem = addButton
         
         DispatchQueue.main.async {
             self.openGalleryButton.addTarget(self, action: #selector(self.openImage), for: .touchDown)
@@ -54,6 +48,9 @@ class NewViewController: UIViewController {
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(tap))
         view.addGestureRecognizer(recognizer)
         print(identifiersArray.count)
+        
+        exitToGalleryButton.addTarget(self, action: #selector(goBack), for: .touchUpInside)
+        addButton.addTarget(self, action: #selector(saveImage), for: .touchUpInside)
     }
     
     @objc func saveImage() {
@@ -95,18 +92,23 @@ class NewViewController: UIViewController {
 }
 
 extension NewViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        guard let image = (info[.editedImage]) as? UIImage else {return}
+        guard let image = (info[.editedImage] ?? info[.originalImage]) as? UIImage else { return }
         imageView.contentMode = .scaleToFill
         imageView.image = image
-
+        
+        if imageView.image != UIImage(systemName: "photo.artframe") {
+            openGalleryButton.isEnabled = true
+        }
+        
+        picker.dismiss(animated: true, completion: nil)
+        
     }
 
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
-
 }
 
 

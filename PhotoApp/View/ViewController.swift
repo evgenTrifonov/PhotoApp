@@ -21,14 +21,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 
     let addButton = UIButton()
     
-//    var imagesArray = ["image0",
-//                  "image1",
-//                  "image2",
-//                  "image3",
-//                  "image4",
-//                  "image5",
-//                  "image6"
-//    ]
+    var imagesArray = ["image0",
+                  "image1",
+                  "image2",
+                  "image3",
+                  "image4",
+                  "image5",
+                  "image6"
+    ]
     
     private let galleryPhotoCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()

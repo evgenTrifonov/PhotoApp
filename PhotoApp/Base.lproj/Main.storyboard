@@ -100,9 +100,6 @@
                                 <buttonConfiguration key="configuration" style="plain" title="Сохранить">
                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
-                                <connections>
-                                    <action selector="addButtonAction:" destination="Iw1-g9-g4d" eventType="touchUpInside" id="KE2-7U-hge"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sph-At-C9g">
                                 <rect key="frame" x="120" y="708" width="174" height="31"/>
@@ -122,9 +119,6 @@
                                 <buttonConfiguration key="configuration" style="plain" title="Назад">
                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
-                                <connections>
-                                    <action selector="exitToGalleryButton:" destination="Iw1-g9-g4d" eventType="touchUpInside" id="Ir0-iM-90e"/>
-                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="xGD-4w-244"/>
@@ -152,9 +146,11 @@
                         <barButtonItem key="backBarButtonItem" title="Назад" id="Sxf-Bt-udU"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="addButton" destination="M4b-MZ-wvz" id="kZ5-hH-Jpq"/>
                         <outlet property="descriptionTextField" destination="xx4-KS-Mzk" id="xHK-bx-Rz8"/>
+                        <outlet property="exitToGalleryButton" destination="Ip4-lB-cvl" id="zhv-2n-tIj"/>
                         <outlet property="imageView" destination="be1-Zg-7Dz" id="Rq8-rd-aQ3"/>
-                        <outlet property="openGalleryButton" destination="sph-At-C9g" id="vFU-IJ-h1M"/>
+                        <outlet property="openGalleryButton" destination="sph-At-C9g" id="qdY-bk-ZET"/>
                         <outlet property="view" destination="ZwC-VQ-fBk" id="uaR-aB-0XA"/>
                     </connections>
                 </viewController>

@@ -13,7 +13,7 @@ class ScrollViewController: UIViewController {
     
     var imageArray: [NewPhoto] = []
     
-    private let commentTextFiled: UITextField = {
+    private let descriptionTextField: UITextField = {
         let textField = UITextField()
         textField.backgroundColor = .white
         textField.borderStyle = .roundedRect
@@ -59,7 +59,7 @@ private extension ScrollViewController {
     }
     
     func setConstraint() {
-        view.addSubviewsForAutoLayout([collectionVIew, commentTextFiled])
+        view.addSubviewsForAutoLayout([collectionVIew, descriptionTextField])
         
         NSLayoutConstraint.activate([
             
@@ -68,10 +68,10 @@ private extension ScrollViewController {
             collectionVIew.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionVIew.heightAnchor.constraint(equalToConstant: view.frame.height / 2),
             
-            commentTextFiled.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
-            commentTextFiled.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            commentTextFiled.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            commentTextFiled.heightAnchor.constraint(equalToConstant: 40),
+            descriptionTextField.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            descriptionTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            descriptionTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            descriptionTextField.heightAnchor.constraint(equalToConstant: 40),
         ])
     }
     
@@ -89,7 +89,7 @@ extension ScrollViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "myCell", for: indexPath)
         let imageData = imageArray[indexPath.row].imageData
         let uiImage = UIImage(data: imageData)
-        commentTextFiled.text = imageArray[indexPath.row].comment
+        descriptionTextField.text = imageArray[indexPath.row].comment
         cell.backgroundView = UIImageView(image: uiImage)
         return cell
     }
