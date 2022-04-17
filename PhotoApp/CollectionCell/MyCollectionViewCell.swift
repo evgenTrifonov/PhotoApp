@@ -7,13 +7,13 @@
 
 import UIKit
 
-class MyCollectionViewCell: UICollectionViewCell {
-
-    
-    @IBOutlet weak var imageView: UIImageView!
-    
-    
-    var titleImage = ""
-    
-    
-}
+//class MyCollectionViewCell: UICollectionViewCell {
+//
+//    
+//    @IBOutlet weak var imageView: UIImageView!
+//    
+//    
+//    var titleImage = ""
+//    
+//    
+//}

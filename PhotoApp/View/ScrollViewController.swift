@@ -8,12 +8,12 @@
 import UIKit
 
 class ScrollViewController: UIViewController {
-  
+    
     let manager = SaveFileManager.instance
+    var photoArray: [NewPhoto] = []
+    var indexPath = IndexPath(item: 0, section: 0)
     
-    var imageArray: [NewPhoto] = []
-    
-    private let descriptionTextField: UITextField = {
+    private let commentTextFiled: UITextField = {
         let textField = UITextField()
         textField.backgroundColor = .white
         textField.borderStyle = .roundedRect
@@ -24,8 +24,8 @@ class ScrollViewController: UIViewController {
     private let collectionVIew: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
         let collectionVIew = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionVIew.backgroundColor = .white
         collectionVIew.isPagingEnabled = true
@@ -38,74 +38,68 @@ class ScrollViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
+        view.backgroundColor = .white
         setConstraint()
         collectionVIew.delegate = self
         collectionVIew.dataSource = self
-    }
-
-}
-
-
-//MARK: - Extension
-
-private extension ScrollViewController {
-    
-    func setupView() {
-        view.backgroundColor = .white
-        
-        
-        
+        collectionVIew.performBatchUpdates(nil) { (_) in
+            self.collectionVIew.scrollToItem(at: self.indexPath, at: .centeredHorizontally, animated: false)
+            self.commentTextFiled.text = self.photoArray[self.indexPath.row].comment
+        }
     }
     
-    func setConstraint() {
-        view.addSubviewsForAutoLayout([collectionVIew, descriptionTextField])
-        
-        NSLayoutConstraint.activate([
-            
-            collectionVIew.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            collectionVIew.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionVIew.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionVIew.heightAnchor.constraint(equalToConstant: view.frame.height / 2),
-            
-            descriptionTextField.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
-            descriptionTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            descriptionTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            descriptionTextField.heightAnchor.constraint(equalToConstant: 40),
-        ])
-    }
-    
-    
+
 }
 
 //MARK: - UICollectionViewDataSource
 extension ScrollViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        imageArray.count
+        photoArray.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "myCell", for: indexPath)
-        let imageData = imageArray[indexPath.row].imageData
+        let imageData = photoArray[indexPath.row].imageData
         let uiImage = UIImage(data: imageData)
-        descriptionTextField.text = imageArray[indexPath.row].comment
         cell.backgroundView = UIImageView(image: uiImage)
         return cell
     }
-    
-   
 }
 
 //MARK: - UICollectionViewDelegateFlowLayout
-extension ScrollViewController: UICollectionViewDelegateFlowLayout {
+extension ScrollViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let layout = collectionViewLayout as? UICollectionViewFlowLayout else { return .zero }
-        
         let itemsPerRow = 1
-        let itemWidth = (collectionView.frame.width - (layout.minimumLineSpacing * CGFloat(itemsPerRow-1))) / CGFloat(itemsPerRow)
+        let itemWidth = (collectionView.frame.width - layout.minimumLineSpacing - layout.minimumInteritemSpacing) / CGFloat(itemsPerRow)
         let itemHeight = itemWidth
         return CGSize(width: itemWidth, height: itemHeight)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        commentTextFiled.text = photoArray[indexPath.row].comment
+    }
+}
 
+//MARK: - Constrain
+private extension ScrollViewController {
+
+    func setConstraint() {
+        view.addSubviewsForAutoLayout([collectionVIew, commentTextFiled])
+        
+        NSLayoutConstraint.activate([
+            
+            collectionVIew.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            collectionVIew.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionVIew.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionVIew.bottomAnchor.constraint(equalTo: commentTextFiled.topAnchor),
+            
+            commentTextFiled.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            commentTextFiled.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            commentTextFiled.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            commentTextFiled.heightAnchor.constraint(equalToConstant: 40),
+        ])
+    }
 }

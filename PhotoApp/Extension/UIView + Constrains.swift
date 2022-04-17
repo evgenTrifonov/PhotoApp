@@ -36,5 +36,4 @@ extension UIView {
     func addSubviewsForAutoLayout(_ views: UIView...) {
         addSubviewsForAutoLayout(views)
     }
-
 }

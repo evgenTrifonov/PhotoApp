@@ -8,29 +8,15 @@
 import UIKit
 import Foundation
 
-private let reuseIdentifier = "MyCollectionView"
-
-
-
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
     
     let manager = SaveFileManager.instance
+    
     var identifiersArray: [String] = UserDefaults.standard.stringArray(forKey: "keyList") ?? [String]()
     
     var newPhotoArray: [NewPhoto] = []
-
-    let addButton = UIButton()
     
-    var imagesArray = ["image0",
-                  "image1",
-                  "image2",
-                  "image3",
-                  "image4",
-                  "image5",
-                  "image6"
-    ]
-    
-    private let galleryPhotoCollectionView: UICollectionView = {
+    private let galleryCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -39,32 +25,27 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "myCell")
         return collectionView
     }()
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "Мой альбом"
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addImage))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Добавить", style: .plain, target: self, action: #selector(addImage))
-        navigationItem.rightBarButtonItem = addButton
-       
-   
-            
-        }
-
+        title = NSLocalizedString("Gallery", comment: "")
+        view.backgroundColor = .white
+        
+        galleryCollectionView.dataSource = self
+        galleryCollectionView.delegate = self
+        setupView()
+        setConstraint()
+        fillingArrayPhoto()
+        galleryCollectionView.reloadData()
+        
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         identifiersArray = UserDefaults.standard.stringArray(forKey: "keyList") ?? [String]()
         fillingArrayPhoto()
-        print(identifiersArray.count)
-        print(newPhotoArray.count)
-        galleryPhotoCollectionView.reloadData()
-    }
-    
-    @objc func pressPlusButton() {
-       
-        
+        galleryCollectionView.reloadData()
     }
     
     func fillingArrayPhoto() {
@@ -74,59 +55,82 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             newPhotoArray.append(newPhoto)
         }
     }
-    
-    
-    @objc func addImage(_ sender: UIButton) {
-        let Controller = UIStoryboard(name: "Main", bundle: nil)
-        let newStoryboard = Controller.instantiateViewController(withIdentifier: "newViewController") as! NewViewController
-        newStoryboard.modalPresentationStyle = .fullScreen
-        present(newStoryboard, animated: true, completion: nil)
-    }
 
-    
 }
 
+//MARK: - UICollectionViewDataSource
 extension ViewController: UICollectionViewDataSource {
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return newPhotoArray.count
+        newPhotoArray.count
     }
-    
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MyCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "myCell", for: indexPath)
         let imageData = newPhotoArray[indexPath.row].imageData
         let uiImage = UIImage(data: imageData)
         cell.backgroundView = UIImageView(image: uiImage)
         return cell
+        
     }
-     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goToOnePhoto" {
-            let newViewController = segue.destination as! NewViewController
-            let cell = sender as! MyCollectionViewCell
-            newViewController.imageViewDetail = cell.imageView.image
-
-            return
-        }
-    }    
 }
 
+//MARK: - UICollectionViewDelegateFlowLayout
 extension ViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let layout = collectionViewLayout as? UICollectionViewFlowLayout else { return .zero }
-        let minimumInteritemSpacing = layout.minimumInteritemSpacing
         
         let itemsPerRow = 3
-        let itemWidth = (collectionView.frame.width - CGFloat(itemsPerRow - 1) * minimumInteritemSpacing - layout.sectionInset.left - layout.sectionInset.right) / CGFloat(itemsPerRow)
-        return CGSize(width: itemWidth, height: itemWidth)
+        let itemWidth = (collectionView.frame.width - (layout.minimumLineSpacing * CGFloat(itemsPerRow-1))) / CGFloat(itemsPerRow)
+        let itemHeight = itemWidth
+        return CGSize(width: itemWidth, height: itemHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath)
-        collectionView.isPagingEnabled = true
+        let scrollViewController = ScrollViewController()
+        scrollViewController.photoArray = newPhotoArray
+        scrollViewController.indexPath = IndexPath(item: indexPath.row, section: 0)
+        navigationItem.backButtonTitle = ""
+        navigationController?.pushViewController(scrollViewController, animated: true)
     }
  
 }
 
+//MARK: - func action
+extension ViewController {
+    
+    @objc func pressPlusButton() {
+        let newViewController = NewViewController()
+        newViewController.modalPresentationStyle = .fullScreen
+        present(newViewController, animated: true, completion: nil)
+    }
+    
+    @objc func backToRootView() {
+        navigationController?.popToRootViewController(animated: true)
+    }
+    
+}
 
+//MARK: - barItem + Constrain
+private extension ViewController {
+    
+    func setupView() {
+        
+        let addPhotoButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(pressPlusButton))
+        navigationItem.rightBarButtonItem = addPhotoButton
+        let backButton = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(backToRootView))
+        backButton.image = UIImage(systemName: "chevron.backward")
+        navigationItem.leftBarButtonItem = backButton
+    }
+    
+    func setConstraint() {
+        view.addSubviewsForAutoLayout([galleryCollectionView])
+        
+        NSLayoutConstraint.activate([
+            galleryCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            galleryCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            galleryCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            galleryCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+        ])
+    }
+}

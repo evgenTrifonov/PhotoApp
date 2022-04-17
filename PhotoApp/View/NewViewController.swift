@@ -11,57 +11,117 @@ class NewViewController: UIViewController {
     
     let manager = SaveFileManager.instance
     var identifiersArray: [String] = UserDefaults.standard.stringArray(forKey: "keyList") ?? [String]()
+    var bottomButtonConstraint: NSLayoutConstraint?
     
-    let button = UIButton()
+    private let customButtonsView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemBlue
+        view.layer.cornerRadius = 20
+        return view
+    }()
     
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var descriptionTextField: UITextField!
-    @IBOutlet weak var openGalleryButton: UIButton!
+    private let commentTextFiled: UITextField = {
+        let textField = UITextField()
+        textField.backgroundColor = .white
+        textField.borderStyle = .roundedRect
+        textField.placeholder = NSLocalizedString("Add commentary", comment: "")
+        textField.textAlignment = .center
+        return textField
+    }()
     
-    var imageViewDetail: UIImage?
-    var descriptionImage: String?
+    private let photoImageView: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(systemName: "photo.artframe")
+        image.contentMode = .scaleAspectFit
+        image.tintColor = .white
+        image.layer.cornerRadius = 10
+        image.backgroundColor = .white
+        return image
+    }()
     
+    private lazy var newPhotoWithCameraButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "camera.fill"), for: .normal)
+        button.tintColor = .white
+        button.backgroundColor = .systemBlue
+        button.layer.cornerRadius = 20
+        button.addTarget(self, action: #selector(newPhoto), for: .touchUpInside)
+        return button
+    }()
     
-    @IBOutlet weak var addButton: UIButton!
+    private lazy var downloadPhotoButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "folder.fill.badge.plus"), for: .normal)
+        button.tintColor = .white
+        button.backgroundColor = .systemBlue
+        button.layer.cornerRadius = 20
+        button.addTarget(self, action: #selector(downloadPhoto), for: .touchUpInside)
+        return button
+    }()
     
+    private lazy var doneButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle(NSLocalizedString("Add photo", comment: ""), for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .red
+        button.isEnabled = false
+        button.layer.cornerRadius = 5
+        button.addTarget(self, action: #selector(saveImage), for: .touchUpInside)
+        return button
+    }()
     
-    @IBAction func openGalleryButtonAction(_ sender: Any) {
-        
-    }
-    
-    
-    @IBOutlet weak var exitToGalleryButton: UIButton!
-    
+    private lazy var backButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle(NSLocalizedString("Back to gallery", comment: ""), for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .black
+        button.layer.cornerRadius = 5
+        button.addTarget(self, action: #selector(goBack), for: .touchUpInside)
+        return button
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        navigationItem.title = "Фотография"
-        
-        imageView.image = imageViewDetail
-        descriptionTextField.text = descriptionImage
-        
-        
-        DispatchQueue.main.async {
-            self.openGalleryButton.addTarget(self, action: #selector(self.openImage), for: .touchDown)
-        }
-        
+        title = NSLocalizedString("image", comment: "")
+        view.backgroundColor = .white
+        setConstraint()
+        addKeyboardObserver()
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(tap))
         view.addGestureRecognizer(recognizer)
         print(identifiersArray.count)
-        
-        exitToGalleryButton.addTarget(self, action: #selector(goBack), for: .touchUpInside)
-        addButton.addTarget(self, action: #selector(saveImage), for: .touchUpInside)
     }
+    
     
     @objc func saveImage() {
         let identifier = UUID()
         identifiersArray.append("\(identifier)")
         UserDefaults.standard.set(self.identifiersArray, forKey: "keyList")
         print(identifiersArray.count)
-        manager.save(image: imageView.image, name: "\(identifier)", comment: descriptionTextField.text ?? "")
-      
+        manager.save(image: photoImageView.image, name: "\(identifier)", comment: commentTextFiled.text ?? "")
+        showAlertDone()
+        doneButton.backgroundColor = .darkGray
+        doneButton.isEnabled = false
     }
     
+    @objc func keyboardWillShow(_ notification: NSNotification) {
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+        let duration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0.25
+        bottomButtonConstraint?.constant -= (keyboardFrame.height - 20)
+        UIView.animate(withDuration: duration) {
+            self.view.layoutIfNeeded()
+            self.bottomButtonConstraint?.constant = -5 - keyboardFrame.height
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: NSNotification) {
+        guard let userInfo = notification.userInfo else { return }
+        let duration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0.25
+        bottomButtonConstraint?.constant = -80
+        UIView.animate(withDuration: duration) {
+            self.view.layoutIfNeeded()
+        }
+    }
     
     @objc func tap() {
         view.endEditing(true)
@@ -71,8 +131,22 @@ class NewViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-
-    @objc func openImage() {
+    @objc func newPhoto() {
+        
+        guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
+            showAlertError()
+            return
+        }
+        let picker = UIImagePickerController()
+        picker.sourceType = .camera
+        picker.mediaTypes = ["public.image"]
+        picker.delegate = self
+        picker.allowsEditing = true
+        present(picker, animated: true, completion: nil)
+        
+    }
+    
+    @objc func downloadPhoto() {
         let picker = UIImagePickerController()
         picker.sourceType = .photoLibrary
         picker.mediaTypes = ["public.image"]
@@ -81,25 +155,84 @@ class NewViewController: UIViewController {
         present(picker, animated: true, completion: nil)
     }
     
-    
-    @objc func exitGallery() {
-        let Controller = UIStoryboard(name: "Main", bundle: nil)
-        let newtStoryboard = Controller.instantiateViewController(withIdentifier: "viewController") as! ViewController
-        newtStoryboard.modalPresentationStyle = .fullScreen
-        present(newtStoryboard, animated: true, completion: nil)
-        
+    func showAlertError() {
+        let alert = UIAlertController(title: NSLocalizedString("error", comment: ""), message: NSLocalizedString("errorCameraAlert", comment: ""), preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("back", comment: ""), style: .destructive, handler: nil))
+        present(alert, animated: true)
     }
+    
+    func showAlertDone() {
+        let alert = UIAlertController(title: NSLocalizedString("congratulations", comment: ""), message: NSLocalizedString("addPhotoAllert", comment: ""), preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default, handler: { UIAlertAction in
+            self.photoImageView.contentMode = .scaleAspectFit
+            self.photoImageView.image = UIImage(systemName: "photo.artframe")
+            self.commentTextFiled.text = ""
+        } ))
+        present(alert, animated: true)
+    }
+    
+
 }
 
+//MARK: - Constrains
+private extension NewViewController {
+    
+    func setConstraint() {
+        view.addSubviewsForAutoLayout([customButtonsView, photoImageView, commentTextFiled, doneButton, backButton])
+        customButtonsView.addSubviewsForAutoLayout([newPhotoWithCameraButton, downloadPhotoButton])
+        
+        bottomButtonConstraint = backButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80)
+        bottomButtonConstraint?.isActive = true
+        
+        NSLayoutConstraint.activate([
+            
+            photoImageView.bottomAnchor.constraint(equalTo: commentTextFiled.topAnchor, constant: -20),
+            photoImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            photoImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            photoImageView.heightAnchor.constraint(equalToConstant: view.frame.height / 2),
+            
+            commentTextFiled.bottomAnchor.constraint(equalTo: doneButton.topAnchor, constant: -20),
+            commentTextFiled.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            commentTextFiled.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            commentTextFiled.heightAnchor.constraint(equalToConstant: 40),
+            
+            doneButton.bottomAnchor.constraint(equalTo: backButton.topAnchor, constant: -20),
+            doneButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            doneButton.widthAnchor.constraint(equalToConstant: 120),
+            doneButton.heightAnchor.constraint(equalToConstant: 40),
+            
+            backButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            backButton.widthAnchor.constraint(equalToConstant: 120),
+            backButton.heightAnchor.constraint(equalToConstant: 40),
+            
+            customButtonsView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            customButtonsView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            customButtonsView.widthAnchor.constraint(equalToConstant: 100),
+            customButtonsView.heightAnchor.constraint(equalToConstant: 40),
+            
+            newPhotoWithCameraButton.leadingAnchor.constraint(equalTo: customButtonsView.leadingAnchor),
+            newPhotoWithCameraButton.widthAnchor.constraint(equalToConstant: 50),
+            newPhotoWithCameraButton.heightAnchor.constraint(equalToConstant: 40),
+            
+            downloadPhotoButton.trailingAnchor.constraint(equalTo: customButtonsView.trailingAnchor),
+            downloadPhotoButton.widthAnchor.constraint(equalToConstant: 50),
+            downloadPhotoButton.heightAnchor.constraint(equalToConstant: 40),
+        ])
+    }
+    
+}
+
+//MARK: - PickerController
 extension NewViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = (info[.editedImage] ?? info[.originalImage]) as? UIImage else { return }
-        imageView.contentMode = .scaleToFill
-        imageView.image = image
+        photoImageView.contentMode = .scaleToFill
+        photoImageView.image = image
         
-        if imageView.image != UIImage(systemName: "photo.artframe") {
-            openGalleryButton.isEnabled = true
+        if photoImageView.image != UIImage(systemName: "photo.artframe") {
+            doneButton.isEnabled = true
+            doneButton.backgroundColor = .systemBlue
         }
         
         picker.dismiss(animated: true, completion: nil)
@@ -112,11 +245,24 @@ extension NewViewController: UIImagePickerControllerDelegate, UINavigationContro
 }
 
 
-
-
 //MARK: - Keyboard
+extension NewViewController {
+    
+    func addKeyboardObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    func removeKeyboardObserver() {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.keyboardWillShowNotification, object: nil)
+    }
+}
 
 extension NewViewController: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        addKeyboardObserver()
+    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
