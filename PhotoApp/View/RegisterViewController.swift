@@ -62,13 +62,13 @@ class RegisterViewController: UIViewController {
 private extension RegisterViewController {
     
     func showAlertSuccess() {
-        let alert = UIAlertController(title: NSLocalizedString("Successfully", comment: ""), message: NSLocalizedString("registration", comment: ""), preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("Successfully", comment: ""), message: NSLocalizedString("Registration", comment: ""), preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ок", style: .default, handler: nil))
         present(alert, animated: true)
     }
     
     func showAlertError() {
-        let alert = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("unable to register", comment: ""), preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Unable to register", comment: ""), preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("Back", comment: ""), style: .destructive, handler: nil))
         present(alert, animated: true)
     }
@@ -117,10 +117,10 @@ private extension RegisterViewController {
         view.addSubviewsForAutoLayout([usernameTextField, passwordTextFiled, regesterButton])
         
         NSLayoutConstraint.activate([
-            usernameTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             usernameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             usernameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             usernameTextField.heightAnchor.constraint(equalToConstant: 40),
+            usernameTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             
             passwordTextFiled.topAnchor.constraint(equalTo: usernameTextField.bottomAnchor, constant: 10),
             passwordTextFiled.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),

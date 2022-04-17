@@ -13,9 +13,16 @@ class NewViewController: UIViewController {
     var identifiersArray: [String] = UserDefaults.standard.stringArray(forKey: "keyList") ?? [String]()
     var bottomButtonConstraint: NSLayoutConstraint?
     
-    private let customButtonsView: UIView = {
+    private let customButtons: UIView = {
         let view = UIView()
-        view.backgroundColor = .systemBlue
+        view.backgroundColor = .systemYellow
+        view.layer.cornerRadius = 20
+        return view
+    }()
+    
+    private let customButtonsAction: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemYellow
         view.layer.cornerRadius = 20
         return view
     }()
@@ -35,7 +42,7 @@ class NewViewController: UIViewController {
         image.contentMode = .scaleAspectFit
         image.tintColor = .white
         image.layer.cornerRadius = 10
-        image.backgroundColor = .white
+        image.backgroundColor = .systemYellow
         return image
     }()
     
@@ -43,7 +50,7 @@ class NewViewController: UIViewController {
         let button = UIButton()
         button.setImage(UIImage(systemName: "camera.fill"), for: .normal)
         button.tintColor = .white
-        button.backgroundColor = .systemBlue
+        button.backgroundColor = .systemYellow
         button.layer.cornerRadius = 20
         button.addTarget(self, action: #selector(newPhoto), for: .touchUpInside)
         return button
@@ -53,7 +60,7 @@ class NewViewController: UIViewController {
         let button = UIButton()
         button.setImage(UIImage(systemName: "folder.fill.badge.plus"), for: .normal)
         button.tintColor = .white
-        button.backgroundColor = .systemBlue
+        button.backgroundColor = .systemYellow
         button.layer.cornerRadius = 20
         button.addTarget(self, action: #selector(downloadPhoto), for: .touchUpInside)
         return button
@@ -61,7 +68,7 @@ class NewViewController: UIViewController {
     
     private lazy var doneButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle(NSLocalizedString("Add photo", comment: ""), for: .normal)
+        button.setTitle(NSLocalizedString("Save photo", comment: ""), for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .red
         button.isEnabled = false
@@ -82,7 +89,7 @@ class NewViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = NSLocalizedString("image", comment: "")
+        title = NSLocalizedString("Image", comment: "")
         view.backgroundColor = .white
         setConstraint()
         addKeyboardObserver()
@@ -156,14 +163,14 @@ class NewViewController: UIViewController {
     }
     
     func showAlertError() {
-        let alert = UIAlertController(title: NSLocalizedString("error", comment: ""), message: NSLocalizedString("errorCameraAlert", comment: ""), preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("back", comment: ""), style: .destructive, handler: nil))
+        let alert = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Error Camera", comment: ""), preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Back", comment: ""), style: .destructive, handler: nil))
         present(alert, animated: true)
     }
     
     func showAlertDone() {
-        let alert = UIAlertController(title: NSLocalizedString("congratulations", comment: ""), message: NSLocalizedString("addPhotoAllert", comment: ""), preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default, handler: { UIAlertAction in
+        let alert = UIAlertController(title: NSLocalizedString("Congratulations", comment: ""), message: NSLocalizedString("Add Photo", comment: ""), preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Ok", comment: ""), style: .default, handler: { UIAlertAction in
             self.photoImageView.contentMode = .scaleAspectFit
             self.photoImageView.image = UIImage(systemName: "photo.artframe")
             self.commentTextFiled.text = ""
@@ -178,8 +185,8 @@ class NewViewController: UIViewController {
 private extension NewViewController {
     
     func setConstraint() {
-        view.addSubviewsForAutoLayout([customButtonsView, photoImageView, commentTextFiled, doneButton, backButton])
-        customButtonsView.addSubviewsForAutoLayout([newPhotoWithCameraButton, downloadPhotoButton])
+        view.addSubviewsForAutoLayout([customButtons, customButtonsAction, photoImageView, commentTextFiled, doneButton, backButton])
+        customButtons.addSubviewsForAutoLayout([newPhotoWithCameraButton, downloadPhotoButton])
         
         bottomButtonConstraint = backButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80)
         bottomButtonConstraint?.isActive = true
@@ -205,16 +212,16 @@ private extension NewViewController {
             backButton.widthAnchor.constraint(equalToConstant: 120),
             backButton.heightAnchor.constraint(equalToConstant: 40),
             
-            customButtonsView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            customButtonsView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
-            customButtonsView.widthAnchor.constraint(equalToConstant: 100),
-            customButtonsView.heightAnchor.constraint(equalToConstant: 40),
+            customButtons.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            customButtons.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            customButtons.widthAnchor.constraint(equalToConstant: 100),
+            customButtons.heightAnchor.constraint(equalToConstant: 40),
             
-            newPhotoWithCameraButton.leadingAnchor.constraint(equalTo: customButtonsView.leadingAnchor),
+            newPhotoWithCameraButton.leadingAnchor.constraint(equalTo: customButtons.leadingAnchor),
             newPhotoWithCameraButton.widthAnchor.constraint(equalToConstant: 50),
             newPhotoWithCameraButton.heightAnchor.constraint(equalToConstant: 40),
             
-            downloadPhotoButton.trailingAnchor.constraint(equalTo: customButtonsView.trailingAnchor),
+            downloadPhotoButton.trailingAnchor.constraint(equalTo: customButtons.trailingAnchor),
             downloadPhotoButton.widthAnchor.constraint(equalToConstant: 50),
             downloadPhotoButton.heightAnchor.constraint(equalToConstant: 40),
         ])

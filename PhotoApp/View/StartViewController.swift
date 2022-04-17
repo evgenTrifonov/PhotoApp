@@ -57,7 +57,7 @@ class StartViewController: UIViewController {
         override func viewDidLoad() {
             super.viewDidLoad()
 
-            title = NSLocalizedString("Welcome", comment: "")
+            title = NSLocalizedString("Gallery entrance", comment: "")
             
             fonImageStartView.contentMode = .scaleAspectFill
             fonImageStartView.frame = CGRect(x: CGFloat.zero, y: CGFloat.zero, width: view.frame.width, height: view.frame.height)
@@ -97,7 +97,7 @@ private extension StartViewController {
 private extension StartViewController {
     
     func showAlertError() {
-        let alert = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("unable to login", comment: ""), preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Unable to login", comment: ""), preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("Back", comment: ""), style: .destructive, handler: nil))
         present(alert, animated: true)
     }
@@ -122,7 +122,7 @@ extension StartViewController {
                let passwordData = existingItem[kSecValueData as String] as? Data,
                let pass = String(data: passwordData, encoding: .utf8),
                password == pass {
-                print("Вход подвержден")
+                print("Login verified")
                 print(username)
                 print(password)
                 completion()
@@ -143,12 +143,10 @@ private extension StartViewController {
         view.addSubviewsForAutoLayout([usernameTextField, passwordTextFiled, galleryButton, registerButton])
         
         NSLayoutConstraint.activate([
-            usernameTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             usernameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             usernameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             usernameTextField.heightAnchor.constraint(equalToConstant: 40),
-            //usernameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            //usernameTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            usernameTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             
             passwordTextFiled.topAnchor.constraint(equalTo: usernameTextField.bottomAnchor, constant: 10),
             passwordTextFiled.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
