@@ -10,6 +10,8 @@ import UIKit
 class RegisterViewController: UIViewController {
     
     let fonImageStartView = UIImageView(image: UIImage(named: "old_fon"))
+    var bottomButtonConstraint: NSLayoutConstraint?
+    let scrollView = UIScrollView()
     
     private let usernameTextField: UITextField = {
         let textField = UITextField()
@@ -37,6 +39,9 @@ class RegisterViewController: UIViewController {
         button.setTitleColor(UIColor.black, for: .normal)
         button.layer.cornerRadius = 5
         button.addTarget(self, action: #selector(regesterDone), for: .touchUpInside)
+        
+        usernameTextField.resignFirstResponder()
+        passwordTextFiled.resignFirstResponder()
         return button
     }()
 
@@ -45,18 +50,83 @@ class RegisterViewController: UIViewController {
         
         title = NSLocalizedString("Registration", comment: "")
         
+        scrollView.frame = view.bounds
+        view.addSubview(scrollView)
+        
         fonImageStartView.contentMode = .scaleAspectFill
         fonImageStartView.frame = CGRect(x: CGFloat.zero, y: CGFloat.zero, width: view.frame.width, height: view.frame.height)
         view.addSubview(fonImageStartView)
         view.sendSubviewToBack(fonImageStartView)
+        
+        
+        addKeyboardObserver()
         
         setConstraint()
         
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(tap))
         view.addGestureRecognizer(recognizer)
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
 
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func keyboardWillShow(_ notification: NSNotification) {
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+        let duration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0.25
+        bottomButtonConstraint?.constant -= (keyboardFrame.height - 20)
+        UIView.animate(withDuration: duration) {
+            self.view.layoutIfNeeded()
+            self.bottomButtonConstraint?.constant = -5 - keyboardFrame.height
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: NSNotification) {
+        guard let userInfo = notification.userInfo else { return }
+        let duration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0.25
+        bottomButtonConstraint?.constant = -80
+        UIView.animate(withDuration: duration) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    deinit {
+        removeKeyboardObserver()
+    
+    }
 }
+
+//MARK: - scrollView + Keyboard
+private extension RegisterViewController {
+ 
+    func addKeyboardObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    func removeKeyboardObserver() {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.keyboardWillShowNotification, object: nil)
+    }
+    
+}
+extension RegisterViewController: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        addKeyboardObserver()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+}
+
+
 
 //MARK: - Alert
 private extension RegisterViewController {
@@ -115,6 +185,9 @@ private extension RegisterViewController {
     
     func setConstraint() {
         view.addSubviewsForAutoLayout([usernameTextField, passwordTextFiled, regesterButton])
+        
+        bottomButtonConstraint = regesterButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 10)
+        bottomButtonConstraint?.isActive = true
         
         NSLayoutConstraint.activate([
             usernameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),

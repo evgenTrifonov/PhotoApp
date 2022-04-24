@@ -11,6 +11,9 @@ import Foundation
 class StartViewController: UIViewController {
 
     let fonImageStartView = UIImageView(image: UIImage(named: "old_fon"))
+    var bottomButtonConstraint: NSLayoutConstraint?
+    let scrollView = UIScrollView()
+    
     
     private let usernameTextField: UITextField = {
         let textField = UITextField()
@@ -39,6 +42,8 @@ class StartViewController: UIViewController {
         button.setTitleColor(UIColor.black, for: .normal)
         button.layer.cornerRadius = 5
         button.addTarget(self, action: #selector(goToGallery), for: .touchUpInside)
+        usernameTextField.resignFirstResponder()
+        passwordTextFiled.resignFirstResponder()
         return button
     }()
     
@@ -50,6 +55,8 @@ class StartViewController: UIViewController {
         button.setTitleColor(UIColor.black, for: .normal)
         button.layer.cornerRadius = 5
         button.addTarget(self, action: #selector(goToRegister), for: .touchUpInside)
+        usernameTextField.resignFirstResponder()
+        passwordTextFiled.resignFirstResponder()
         return button
     }()
    
@@ -59,10 +66,15 @@ class StartViewController: UIViewController {
 
             title = NSLocalizedString("Gallery entrance", comment: "")
             
+            scrollView.frame = view.bounds
+            view.addSubview(scrollView)
+            
             fonImageStartView.contentMode = .scaleAspectFill
             fonImageStartView.frame = CGRect(x: CGFloat.zero, y: CGFloat.zero, width: view.frame.width, height: view.frame.height)
             view.addSubview(fonImageStartView)
             view.sendSubviewToBack(fonImageStartView)
+
+            addKeyboardObserver()
             
             setConstraint()
             
@@ -70,6 +82,66 @@ class StartViewController: UIViewController {
             view.addGestureRecognizer(recognizer)
             
         }
+   
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    deinit {
+        removeKeyboardObserver()
+    
+    }
+ 
+}
+
+//MARK: - Keyboard
+extension StartViewController {
+    
+    func addKeyboardObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    func removeKeyboardObserver() {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.keyboardWillShowNotification, object: nil)
+    }
+    
+    @objc func keyboardWillShow(_ notification: NSNotification) {
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+        let duration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0.25
+        bottomButtonConstraint?.constant -= (keyboardFrame.height - 20)
+        UIView.animate(withDuration: duration) {
+            self.view.layoutIfNeeded()
+            self.bottomButtonConstraint?.constant = -5 - keyboardFrame.height
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: NSNotification) {
+        guard let userInfo = notification.userInfo else { return }
+        let duration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0.25
+        bottomButtonConstraint?.constant = -80
+        UIView.animate(withDuration: duration) {
+            self.view.layoutIfNeeded()
+        }
+    }
+}
+
+extension StartViewController: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        addKeyboardObserver()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
 }
 
 //MARK: - func action
@@ -79,13 +151,14 @@ private extension StartViewController {
         login(userName: usernameTextField.text ?? "", password: passwordTextFiled.text ?? "") {
             let viewController = ViewController()
             navigationController?.pushViewController(viewController, animated: true)
+        
         }
     }
     
     @objc func goToRegister() {
         let registerViewController = RegisterViewController()
         navigationController?.pushViewController(registerViewController, animated: true)
-        
+    
     }
     
     @objc func tap() {
@@ -141,6 +214,9 @@ private extension StartViewController {
     
     func setConstraint() {
         view.addSubviewsForAutoLayout([usernameTextField, passwordTextFiled, galleryButton, registerButton])
+        
+        //bottomButtonConstraint = galleryButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
+        bottomButtonConstraint?.isActive = true
         
         NSLayoutConstraint.activate([
             usernameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),

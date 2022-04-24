@@ -89,10 +89,13 @@ class NewViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         title = NSLocalizedString("Image", comment: "")
         view.backgroundColor = .white
-        setConstraint()
+        
         addKeyboardObserver()
+        setConstraint()
+     
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(tap))
         view.addGestureRecognizer(recognizer)
         print(identifiersArray.count)
@@ -110,25 +113,7 @@ class NewViewController: UIViewController {
         doneButton.isEnabled = false
     }
     
-    @objc func keyboardWillShow(_ notification: NSNotification) {
-        guard let userInfo = notification.userInfo,
-              let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
-        let duration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0.25
-        bottomButtonConstraint?.constant -= (keyboardFrame.height - 20)
-        UIView.animate(withDuration: duration) {
-            self.view.layoutIfNeeded()
-            self.bottomButtonConstraint?.constant = -5 - keyboardFrame.height
-        }
-    }
-    
-    @objc func keyboardWillHide(_ notification: NSNotification) {
-        guard let userInfo = notification.userInfo else { return }
-        let duration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0.25
-        bottomButtonConstraint?.constant = -80
-        UIView.animate(withDuration: duration) {
-            self.view.layoutIfNeeded()
-        }
-    }
+ 
     
     @objc func tap() {
         view.endEditing(true)
@@ -176,6 +161,31 @@ class NewViewController: UIViewController {
             self.commentTextFiled.text = ""
         } ))
         present(alert, animated: true)
+    }
+    
+    @objc func keyboardWillShow(_ notification: NSNotification) {
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+        let duration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0.25
+        bottomButtonConstraint?.constant -= (keyboardFrame.height - 20)
+        UIView.animate(withDuration: duration) {
+            self.view.layoutIfNeeded()
+            self.bottomButtonConstraint?.constant = -5 - keyboardFrame.height
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: NSNotification) {
+        guard let userInfo = notification.userInfo else { return }
+        let duration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0.25
+        bottomButtonConstraint?.constant = -80
+        UIView.animate(withDuration: duration) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    deinit {
+        removeKeyboardObserver()
+    
     }
     
 
@@ -263,6 +273,8 @@ extension NewViewController {
     func removeKeyboardObserver() {
         NotificationCenter.default.removeObserver(self, name: UIApplication.keyboardWillShowNotification, object: nil)
     }
+    
+   
 }
 
 extension NewViewController: UITextFieldDelegate {
