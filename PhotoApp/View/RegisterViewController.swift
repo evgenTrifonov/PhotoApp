@@ -75,23 +75,15 @@ class RegisterViewController: UIViewController {
     }
     
     @objc func keyboardWillShow(_ notification: NSNotification) {
-        guard let userInfo = notification.userInfo,
-              let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
-        let duration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0.25
-        bottomButtonConstraint?.constant -= (keyboardFrame.height - 20)
-        UIView.animate(withDuration: duration) {
-            self.view.layoutIfNeeded()
-            self.bottomButtonConstraint?.constant = -5 - keyboardFrame.height
-        }
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+                   view.frame.origin.y -= keyboardSize.size.height / 4
+               
+               }
     }
     
     @objc func keyboardWillHide(_ notification: NSNotification) {
-        guard let userInfo = notification.userInfo else { return }
-        let duration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0.25
-        bottomButtonConstraint?.constant = -80
-        UIView.animate(withDuration: duration) {
-            self.view.layoutIfNeeded()
-        }
+        scrollView.contentOffset = CGPoint.zero
+            view.frame.origin.y = 0
     }
     
     deinit {
@@ -186,8 +178,7 @@ private extension RegisterViewController {
     func setConstraint() {
         view.addSubviewsForAutoLayout([usernameTextField, passwordTextFiled, regesterButton])
         
-        bottomButtonConstraint = regesterButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 10)
-        bottomButtonConstraint?.isActive = true
+      
         
         NSLayoutConstraint.activate([
             usernameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),

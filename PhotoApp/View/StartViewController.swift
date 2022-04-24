@@ -91,6 +91,18 @@ class StartViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+    @objc func keyboardWillShow(_ notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+                   view.frame.origin.y -= keyboardSize.size.height / 4
+               
+               }
+    }
+    
+    @objc func keyboardWillHide(_ notification: NSNotification) {
+        scrollView.contentOffset = CGPoint.zero
+            view.frame.origin.y = 0
+    }
+    
     deinit {
         removeKeyboardObserver()
     
@@ -110,25 +122,8 @@ extension StartViewController {
         NotificationCenter.default.removeObserver(self, name: UIApplication.keyboardWillShowNotification, object: nil)
     }
     
-    @objc func keyboardWillShow(_ notification: NSNotification) {
-        guard let userInfo = notification.userInfo,
-              let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
-        let duration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0.25
-        bottomButtonConstraint?.constant -= (keyboardFrame.height - 20)
-        UIView.animate(withDuration: duration) {
-            self.view.layoutIfNeeded()
-            self.bottomButtonConstraint?.constant = -5 - keyboardFrame.height
-        }
-    }
+  
     
-    @objc func keyboardWillHide(_ notification: NSNotification) {
-        guard let userInfo = notification.userInfo else { return }
-        let duration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0.25
-        bottomButtonConstraint?.constant = -80
-        UIView.animate(withDuration: duration) {
-            self.view.layoutIfNeeded()
-        }
-    }
 }
 
 extension StartViewController: UITextFieldDelegate {
@@ -214,9 +209,6 @@ private extension StartViewController {
     
     func setConstraint() {
         view.addSubviewsForAutoLayout([usernameTextField, passwordTextFiled, galleryButton, registerButton])
-        
-        //bottomButtonConstraint = galleryButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
-        bottomButtonConstraint?.isActive = true
         
         NSLayoutConstraint.activate([
             usernameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
