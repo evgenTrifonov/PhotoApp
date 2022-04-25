@@ -80,7 +80,6 @@ class StartViewController: UIViewController {
             
             let recognizer = UITapGestureRecognizer(target: self, action: #selector(tap))
             view.addGestureRecognizer(recognizer)
-            
         }
    
     
@@ -107,7 +106,6 @@ class StartViewController: UIViewController {
         removeKeyboardObserver()
     
     }
- 
 }
 
 //MARK: - Keyboard
@@ -121,9 +119,6 @@ extension StartViewController {
     func removeKeyboardObserver() {
         NotificationCenter.default.removeObserver(self, name: UIApplication.keyboardWillShowNotification, object: nil)
     }
-    
-  
-    
 }
 
 extension StartViewController: UITextFieldDelegate {

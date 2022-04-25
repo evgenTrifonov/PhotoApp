@@ -101,7 +101,6 @@ class NewViewController: UIViewController {
         print(identifiersArray.count)
     }
     
-    
     @objc func saveImage() {
         let identifier = UUID()
         identifiersArray.append("\(identifier)")
@@ -112,8 +111,6 @@ class NewViewController: UIViewController {
         doneButton.backgroundColor = .darkGray
         doneButton.isEnabled = false
     }
-    
- 
     
     @objc func tap() {
         view.endEditing(true)
@@ -135,7 +132,6 @@ class NewViewController: UIViewController {
         picker.delegate = self
         picker.allowsEditing = true
         present(picker, animated: true, completion: nil)
-        
     }
     
     @objc func downloadPhoto() {
@@ -185,10 +181,7 @@ class NewViewController: UIViewController {
     
     deinit {
         removeKeyboardObserver()
-    
     }
-    
-
 }
 
 //MARK: - Constrains
@@ -251,7 +244,6 @@ extension NewViewController: UIImagePickerControllerDelegate, UINavigationContro
             doneButton.isEnabled = true
             doneButton.backgroundColor = .systemBlue
         }
-        
         picker.dismiss(animated: true, completion: nil)
         
     }
@@ -273,8 +265,6 @@ extension NewViewController {
     func removeKeyboardObserver() {
         NotificationCenter.default.removeObserver(self, name: UIApplication.keyboardWillShowNotification, object: nil)
     }
-    
-   
 }
 
 extension NewViewController: UITextFieldDelegate {

@@ -115,10 +115,7 @@ extension RegisterViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
-    
 }
-
-
 
 //MARK: - Alert
 private extension RegisterViewController {
@@ -154,8 +151,7 @@ private extension RegisterViewController {
         } else {
             print("Error")
         }
-    }
-    
+    } 
 }
 
 //MARK: - Action
@@ -177,9 +173,7 @@ private extension RegisterViewController {
     
     func setConstraint() {
         view.addSubviewsForAutoLayout([usernameTextField, passwordTextFiled, regesterButton])
-        
-      
-        
+
         NSLayoutConstraint.activate([
             usernameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             usernameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),

@@ -13,7 +13,6 @@
 		5C15284327B2E0FE0004EFCA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C15284127B2E0FE0004EFCA /* Main.storyboard */; };
 		5C15284527B2E0FF0004EFCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C15284427B2E0FF0004EFCA /* Assets.xcassets */; };
 		5C15284827B2E0FF0004EFCA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C15284627B2E0FF0004EFCA /* LaunchScreen.storyboard */; };
-		5C85FEE327E91C2D007A7907 /* MyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C85FEE227E91C2D007A7907 /* MyCollectionViewCell.swift */; };
 		5C85FEE527E91E7F007A7907 /* NewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C85FEE427E91E7F007A7907 /* NewViewController.swift */; };
 		5C85FEE827EA32E8007A7907 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C85FEE727EA32E8007A7907 /* StartViewController.swift */; };
 		5C85FEEA27EBBFEB007A7907 /* saveFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C85FEE927EBBFEB007A7907 /* saveFileManager.swift */; };
@@ -32,7 +31,6 @@
 		5C15284427B2E0FF0004EFCA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5C15284727B2E0FF0004EFCA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5C15284927B2E0FF0004EFCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5C85FEE227E91C2D007A7907 /* MyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCollectionViewCell.swift; sourceTree = "<group>"; };
 		5C85FEE427E91E7F007A7907 /* NewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewViewController.swift; sourceTree = "<group>"; };
 		5C85FEE727EA32E8007A7907 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		5C85FEE927EBBFEB007A7907 /* saveFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = saveFileManager.swift; sourceTree = "<group>"; };
@@ -78,7 +76,6 @@
 				5C85FF5027F87C50007A7907 /* Extension */,
 				5C85FF4D27F87BDB007A7907 /* Model */,
 				5C85FEDD27E90E3A007A7907 /* View */,
-				5C85FEE627E91E86007A7907 /* CollectionCell */,
 				5CDD0379280C0C3F00488B00 /* Information */,
 				5C15284427B2E0FF0004EFCA /* Assets.xcassets */,
 				5C15284927B2E0FF0004EFCA /* Info.plist */,
@@ -96,14 +93,6 @@
 				5C85FEE427E91E7F007A7907 /* NewViewController.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		5C85FEE627E91E86007A7907 /* CollectionCell */ = {
-			isa = PBXGroup;
-			children = (
-				5C85FEE227E91C2D007A7907 /* MyCollectionViewCell.swift */,
-			);
-			path = CollectionCell;
 			sourceTree = "<group>";
 		};
 		5C85FF4C27F87BCB007A7907 /* Application */ = {
@@ -215,7 +204,6 @@
 			files = (
 				5C15284027B2E0FE0004EFCA /* ViewController.swift in Sources */,
 				5C85FEE827EA32E8007A7907 /* StartViewController.swift in Sources */,
-				5C85FEE327E91C2D007A7907 /* MyCollectionViewCell.swift in Sources */,
 				5C85FF4927F86FDA007A7907 /* RegisterViewController.swift in Sources */,
 				5C85FF4B27F87A8F007A7907 /* ScrollViewController.swift in Sources */,
 				5C85FEEA27EBBFEB007A7907 /* saveFileManager.swift in Sources */,

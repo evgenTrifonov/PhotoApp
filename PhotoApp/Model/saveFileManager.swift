@@ -12,9 +12,7 @@ import UIKit
 class SaveFileManager {
 
     static let instance = SaveFileManager()
-    
-    
-    
+
     func save(image: UIImage?, name: String, comment: String) {
         guard let image = image else { return }
         guard let data = image.jpegData(compressionQuality: 1.0),

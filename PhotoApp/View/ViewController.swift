@@ -38,7 +38,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         setConstraint()
         fillingArrayPhoto()
         galleryCollectionView.reloadData()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,7 +70,6 @@ extension ViewController: UICollectionViewDataSource {
         let uiImage = UIImage(data: imageData)
         cell.backgroundView = UIImageView(image: uiImage)
         return cell
-        
     }
 }
 
@@ -108,7 +106,6 @@ extension ViewController {
     @objc func backToRootView() {
         navigationController?.popToRootViewController(animated: true)
     }
-    
 }
 
 //MARK: - barItem + Constrain

@@ -9,6 +9,7 @@ import UIKit
 
 class ScrollViewController: UIViewController {
     
+    let scrollView = UIScrollView()
     let manager = SaveFileManager.instance
     var photoArray: [NewPhoto] = []
     var indexPath = IndexPath(item: 0, section: 0)
@@ -38,7 +39,11 @@ class ScrollViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        scrollView.frame = view.bounds
+        view.addSubview(scrollView)
         view.backgroundColor = .white
+        
         setConstraint()
         collectionVIew.delegate = self
         collectionVIew.dataSource = self
@@ -46,9 +51,59 @@ class ScrollViewController: UIViewController {
             self.collectionVIew.scrollToItem(at: self.indexPath, at: .centeredHorizontally, animated: false)
             self.commentTextFiled.text = self.photoArray[self.indexPath.row].comment
         }
+        
+        addKeyboardObserver() 
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
 
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func keyboardWillShow(_ notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+                   view.frame.origin.y -= keyboardSize.size.height / 3
+               }
+    }
+    
+    @objc func keyboardWillHide(_ notification: NSNotification) {
+        scrollView.contentOffset = CGPoint.zero
+            view.frame.origin.y = 0
+    }
+    
+    deinit {
+        removeKeyboardObserver()
+    
+    }
+
+}
+
+//MARK: - scrollView + Keyboard
+private extension ScrollViewController {
+ 
+    func addKeyboardObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    func removeKeyboardObserver() {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.keyboardWillShowNotification, object: nil)
+    }
+    
+}
+extension ScrollViewController: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        addKeyboardObserver()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
 }
 
 //MARK: - UICollectionViewDataSource
